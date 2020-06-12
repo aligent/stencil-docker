@@ -1,4 +1,6 @@
 #!/bin/bash
+#set -x
+
 APP_ROOT="/app"
 
 DOCKER_UID=`stat -c "%u" $APP_ROOT`
@@ -18,11 +20,14 @@ userdel node
 groupadd --gid ${DOCKER_GID} node
 useradd --gid node --no-log-init --home-dir /home/node --shell /bin/bash --uid ${DOCKER_UID} node
 
+chown -R node:node /home/node/.config
+
+cd $APP_ROOT
+
 if [ "${1:-}" = "stencil" ]; then
   shift
-  cd $APP_ROOT
   exec sudo -u node /home/node/.npm-global/bin/stencil "$@"
 fi
 
-exec "$@"
+exec sudo -u node "$@"
 
