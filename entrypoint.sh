@@ -7,8 +7,8 @@ DOCKER_GID=`stat -c "%g" $APP_ROOT`
 INCUMBENT_USER=`getent passwd $DOCKER_UID | cut -d: -f1`
 INCUMBENT_GROUP=`getent group $DOCKER_GID | cut -d: -f1`
 
-echo "Docker: uid = $DOCKER_UID, gid = $DOCKER_GID"
-echo "Incumbent: user = $INCUMBENT_USER, group = $INCUMBENT_GROUP"
+#echo "Docker: uid = $DOCKER_UID, gid = $DOCKER_GID"
+#echo "Incumbent: user = $INCUMBENT_USER, group = $INCUMBENT_GROUP"
 
 # Once we've established the ids and incumbent ids then we need to free them
 # up (if necessary) and then make the change to node.
