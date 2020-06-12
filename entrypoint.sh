@@ -1,11 +1,4 @@
 #!/bin/bash
-set -x
-
-echo "Running"
-
-
-echo "Updating www uid and gid"
-
 APP_ROOT="/app"
 
 DOCKER_UID=`stat -c "%u" $APP_ROOT`
