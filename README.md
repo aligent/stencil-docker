@@ -10,7 +10,7 @@ Add the following lines to your `~/.bashrc` file to be able to run it easily...
 
 ```
 alias node-run='docker run --rm -p 3000:3000 -p 3002:3002 -it --volume ~/.npm:/home/node/.npm --volume $PWD:/app aligent/stencil'
-alias stencil=`node-run stencil`
+alias stencil='node-run stencil'
 ```
 
 You will then need to reload your bashrc file, either by running `. ~/.bashrc` or starting a new terminal session.
