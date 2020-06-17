@@ -29,5 +29,12 @@ if [ "${1:-}" = "stencil" ]; then
   exec sudo -u node /home/node/.npm-global/bin/stencil "$@"
 fi
 
+
+if [ "${1:-}" = "ajv" ]; then
+  shift
+  exec sudo -u node /home/node/.npm-global/bin/ajv "$@"
+fi
+
+
 exec sudo -u node "$@"
 
