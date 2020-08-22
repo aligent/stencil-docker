@@ -1,0 +1,14 @@
+{
+  "name": "stencil-cli-docker",
+  "version": "1.0.0",
+  "author": "Jarrod Swift <jarrod.swift@aligent.com.au> (https://aligent.com.au)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/aligent/stencil-docker/issues"
+  },
+  "homepage": "https://github.com/aligent/stencil-docker#readme",
+  "dependencies": {
+    "@bigcommerce/stencil-cli": "github:bigcommerce/stencil-cli",
+    "ajv-cli": "*"
+  }
+}
