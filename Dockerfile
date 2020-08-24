@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:10-slim
 
 RUN mkdir /app
 RUN chown node:node /app
@@ -8,7 +8,7 @@ EXPOSE 3002/tcp
 
 ARG DEBIAN_INTERACTIVE=noninteractive
 RUN apt-get update && \
-    apt-get --no-install-recommends --assume-yes --quiet install sudo && \ 
+    apt-get --no-install-recommends --assume-yes --quiet install sudo git && \ 
     rm -rf /var/lib/apt/lists/*
 
 USER node
