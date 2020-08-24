@@ -8,7 +8,7 @@ EXPOSE 3002/tcp
 
 ARG DEBIAN_INTERACTIVE=noninteractive
 RUN apt-get update && \
-    apt-get --no-install-recommends --assume-yes --quiet install sudo git && \ 
+    apt-get --no-install-recommends --assume-yes --quiet install sudo git openssl && \ 
     rm -rf /var/lib/apt/lists/*
 
 USER node
