@@ -9,9 +9,6 @@ DOCKER_GID=`stat -c "%g" $APP_ROOT`
 INCUMBENT_USER=`getent passwd $DOCKER_UID | cut -d: -f1`
 INCUMBENT_GROUP=`getent group $DOCKER_GID | cut -d: -f1`
 
-STENCIL_CMD="/app/node_modules/@bigcommerce/stencil-cli/bin/stencil"
-AJV_CMD="/app/node_modules/ajv-cli/index.js"
-
 #echo "Docker: uid = $DOCKER_UID, gid = $DOCKER_GID"
 #echo "Incumbent: user = $INCUMBENT_USER, group = $INCUMBENT_GROUP"
 
@@ -29,13 +26,13 @@ cd $APP_ROOT
 
 if [ "${1:-}" = "stencil" ]; then
   shift
-  exec sudo -u node $STENCIL_CMD "$@"
+  exec sudo -u node /home/node/.npm-global/bin/stencil "$@"
 fi
 
 
 if [ "${1:-}" = "ajv" ]; then
   shift
-  exec sudo -u node $AJV_CMD "$@"
+  exec sudo -u node /home/node/.npm-global/bin/ajv "$@"
 fi
 
 
