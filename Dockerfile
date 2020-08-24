@@ -1,4 +1,4 @@
-FROM node:10-slim
+FROM node:10
 
 RUN mkdir /app
 RUN chown node:node /app
@@ -8,7 +8,7 @@ EXPOSE 3002/tcp
 
 ARG DEBIAN_INTERACTIVE=noninteractive
 RUN apt-get update && \
-    apt-get --no-install-recommends --assume-yes --quiet install sudo git openssl && \ 
+    apt-get --no-install-recommends --assume-yes --quiet install sudo && \ 
     rm -rf /var/lib/apt/lists/*
 
 USER node
