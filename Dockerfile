@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:12-slim
 
 RUN mkdir /app
 RUN chown node:node /app
@@ -8,17 +8,17 @@ EXPOSE 3002/tcp
 
 ARG DEBIAN_INTERACTIVE=noninteractive
 RUN apt-get update && \
-    apt-get --no-install-recommends --assume-yes --quiet install sudo && \ 
-    rm -rf /var/lib/apt/lists/*
+    apt-get --no-install-recommends --assume-yes --quiet install sudo git ca-certificates && \ 
+    rm -rf /var/lib/apt/lists/* && \
+    update-ca-certificates
 
 USER node
 WORKDIR /app
 
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
-RUN npm install -g @bigcommerce/stencil-cli@3.0.3 ajv-cli
 
-RUN stencil --version
+RUN npm install -g @bigcommerce/stencil-cli@3.1.0 ajv-cli &&  stencil --version
 
 USER root
 
