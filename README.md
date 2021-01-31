@@ -2,6 +2,8 @@
 
 Docker image for running the stencil command without requiring it to be installed.
 
+The image is available on Docker Hub as [aligent/stencil](https://hub.docker.com/r/aligent/stencil).
+
 ## Installation
 
 Ensure you have a .npm directory for caching dependancies (`mkdir -p ~/.npm`)
