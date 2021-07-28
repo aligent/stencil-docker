@@ -4,6 +4,8 @@ Docker image for running the stencil command without requiring it to be installe
 
 The image is available on Docker Hub as [aligent/stencil](https://hub.docker.com/r/aligent/stencil).
 
+This code simply wraps [bigcommerce/stencil-cli](https://github.com/bigcommerce/stencil-cli) in docker for convenience.
+
 ## Installation
 
 Ensure you have a .npm directory for caching dependancies (`mkdir -p ~/.npm`)
