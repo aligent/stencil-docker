@@ -19,7 +19,7 @@ ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
 
 RUN npm install -g ajv-cli@3.3.0
-RUN npm install -g @bigcommerce/stencil-cli@5.2.5 && stencil --version
+RUN npm install -g @bigcommerce/stencil-cli@6.0.0 && stencil --version
 
 USER root
 
