@@ -1,4 +1,4 @@
-FROM node:14-slim
+FROM node:16-slim
 
 RUN mkdir /app
 RUN chown node:node /app
@@ -18,8 +18,8 @@ WORKDIR /app
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
 
-RUN npm install -g ajv-cli@3.3.0
-RUN npm install -g @bigcommerce/stencil-cli@6.0.0 && stencil --version
+RUN npm install -g ajv-cli@5.0.0
+RUN npm install -g @bigcommerce/stencil-cli@7.2.3
 
 USER root
 
