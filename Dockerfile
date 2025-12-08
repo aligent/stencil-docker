@@ -18,8 +18,9 @@ WORKDIR /app
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
 
+ARG STENCIL_VERSION=8.10.5
 RUN npm install -g ajv-cli@5.0.x
-RUN npm install -g @bigcommerce/stencil-cli@8.6.0
+RUN npm install -g @bigcommerce/stencil-cli@${STENCIL_VERSION}
 
 USER root
 

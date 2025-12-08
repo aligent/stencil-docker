@@ -1,0 +1,110 @@
+#!/usr/bin/env python3
+"""
+Docker Hub build hook
+Builds images for the last 2 major versions of stencil-cli
+Creates tags: major (8), minor (8.10), patch (8.10.5), and latest
+"""
+
+import json
+import os
+import subprocess
+import urllib.request
+from collections import defaultdict
+
+DOCKER_REPO = os.environ.get("DOCKER_REPO", "")
+DOCKERFILE_PATH = os.environ.get("DOCKERFILE_PATH", "Dockerfile")
+
+
+def fetch_versions():
+    """Fetch all stencil-cli versions from npm registry."""
+    url = "https://registry.npmjs.org/@bigcommerce/stencil-cli"
+    with urllib.request.urlopen(url) as response:
+        data = json.loads(response.read().decode())
+    return list(data.get("versions", {}).keys())
+
+
+def parse_version(version):
+    """Parse version string into tuple of integers."""
+    parts = version.split("-")[0].split(".")
+    return tuple(int(p) for p in parts)
+
+
+def get_latest_per_major(versions, min_major):
+    """Get the latest version for each major version >= min_major."""
+    major_versions = defaultdict(list)
+
+    for version in versions:
+        # Skip pre-release versions
+        if "-" in version:
+            continue
+
+        major = int(version.split(".")[0])
+        if major >= min_major:
+            major_versions[major].append(version)
+
+    # Get highest version for each major
+    latest = {}
+    for major, vers in major_versions.items():
+        latest[major] = max(vers, key=parse_version)
+
+    return latest
+
+
+def build_image(version):
+    """Build Docker image with given stencil-cli version."""
+    major = version.split(".")[0]
+    minor = ".".join(version.split(".")[:2])
+
+    print("=" * 44)
+    print(f"Building stencil-cli {version}")
+    print(f"  Tags: {version}, {minor}, {major}")
+    print("=" * 44)
+
+    subprocess.run(
+        [
+            "docker", "build",
+            "--build-arg", f"STENCIL_VERSION={version}",
+            "-f", DOCKERFILE_PATH,
+            "-t", f"{DOCKER_REPO}:{version}",
+            "-t", f"{DOCKER_REPO}:{minor}",
+            "-t", f"{DOCKER_REPO}:{major}",
+            ".",
+        ],
+        check=True,
+    )
+
+
+def main():
+    print("Fetching stencil-cli versions from npm registry...")
+    versions = fetch_versions()
+
+    # Find highest major version
+    stable_versions = [v for v in versions if "-" not in v]
+    highest_major = max(int(v.split(".")[0]) for v in stable_versions)
+
+    # Build last 2 major versions
+    min_major = highest_major - 1
+    print(f"Building last 2 major versions ({min_major} and {highest_major})")
+
+    latest_versions = get_latest_per_major(versions, min_major)
+
+    # Build each major's latest version
+    latest_version = None
+    for major in sorted(latest_versions.keys()):
+        version = latest_versions[major]
+        build_image(version)
+        latest_version = version
+
+    # Tag latest
+    if latest_version:
+        print("=" * 44)
+        print(f"Tagging {latest_version} as latest")
+        print("=" * 44)
+        subprocess.run(
+            ["docker", "tag", f"{DOCKER_REPO}:{latest_version}", f"{DOCKER_REPO}:latest"],
+            check=True,
+        )
+
+
+if __name__ == "__main__":
+    main()

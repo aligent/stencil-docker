@@ -1,0 +1,9 @@
+#!/bin/bash
+# Docker Hub push hook
+# Pushes ALL built stencil-cli version tags (major, minor, patch, and latest)
+
+set -e
+
+# Push all tags for this repo
+echo "Pushing all tags for ${DOCKER_REPO}..."
+docker push --all-tags "${DOCKER_REPO}"
