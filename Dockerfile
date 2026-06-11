@@ -7,7 +7,7 @@ EXPOSE 3000/tcp
 EXPOSE 3002/tcp
 
 ARG DEBIAN_INTERACTIVE=noninteractive
-RUN apt-get update && \
+RUN apt-get update && apt-get upgrade -y && \
     apt-get --no-install-recommends --assume-yes --quiet install sudo git ca-certificates bzip2 curl openssh-client python3 build-essential libsass-dev gettext-base && \ 
     rm -rf /var/lib/apt/lists/* && \
     update-ca-certificates
